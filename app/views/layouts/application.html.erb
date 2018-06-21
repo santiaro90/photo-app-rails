@@ -9,7 +9,10 @@
   </head>
 
   <body>
+    <%= render 'layouts/navigation' %>
+
     <div class="container">
+      <%= bootstrap_flash %>
       <%= yield %>
     </div>
   </body>

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <%= link_to 'Photo App', root_path, class: 'navbar-brand' %>
+
+  <ul class="navbar-nav">
+    <% if current_user %>
+
+      <li class="nav-item">
+        <%= link_to(edit_user_registration_path,
+                    class: 'nav-link',
+                    title: 'Edit Profile') do %>
+
+          <i class="fa fa-user"></i>
+          <%= truncate(current_user.email, length: 25) %>
+
+        <% end %>
+      </li>
+
+      <%= button_to 'Log Out',
+                    destroy_user_session_path,
+                    method: :delete,
+                    form_class: 'form-inline',
+                    class: 'btn btn-sm btn-danger' %>
+
+    <% else %>
+
+      <%= link_to 'Sign In',
+                  new_user_session_path,
+                  form_class: 'form-inline',
+                  class: 'btn btn-sm btn-success' %>
+
+    <% end %>
+  </ul>
+</nav>
