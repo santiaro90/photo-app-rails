@@ -1,1 +1,45 @@
-<h1>Welcome to the Photo App</h1>
+<h1 class="mt-5 mb-5">
+  Welcome to the Photo Management App
+  <small class="d-block text-muted">
+    You'll love managing your photos with our application. Sign up!
+  </small>
+</h1>
+
+<section class="card-deck">
+  <div class="card plan-card">
+    <h4 class="card-header text-center">Premium Plan</h4>
+
+    <div class="card-body">
+      <h5 class="card-title plan-card__price">$10</h5>
+
+      <ul class="card-text">
+        <li>Unlimited image uploads</li>
+        <li>Responsive design</li>
+        <li>Access anywhere</li>
+      </ul>
+    </div>
+
+    <div class="card-footer text-center plan-card__cta">
+      <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-success btn-sm' %>
+    </div>
+  </div>
+
+  <div class="card plan-card">
+    <h4 class="card-header text-center">Amaze Plan</h4>
+
+    <div class="card-body">
+      <h5 class="card-title plan-card__price">$20</h5>
+
+      <ul class="card-text">
+        <li>Unlimited image uploads</li>
+        <li>Responsive design</li>
+        <li>Access anywhere</li>
+        <li>Unlimited projects</li>
+      </ul>
+    </div>
+
+    <div class="card-footer text-center plan-card__cta">
+      <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-success btn-sm' %>
+    </div>
+  </div>
+</section>
