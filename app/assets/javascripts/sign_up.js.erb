@@ -1,5 +1,5 @@
-((window, $) => {
-  let $form, $submit;
+;(function (window, $) {
+  var $form, $submit;
 
   function initSignUp() {
     $form = $('form#sign-up');
@@ -25,7 +25,7 @@
     if (response.error) {
       onTokenError(response.error);
     } else {
-      const $token = $('<input type="hidden" name="payment[token]">').val(response.id);
+      var $token = $('<input type="hidden" name="payment[token]">').val(response.id);
 
       $form.off('submit');
       $form.append($token);
@@ -35,26 +35,28 @@
   }
 
   function onTokenError(error) {
-    const $flash = $('#credit-card-error');
+    var $flash = $('#credit-card-error');
 
     if (!$flash.length) {
-      const $container = $('main.container').first();
+      var $container = $('main.container').first();
       $container.prepend($flash);
     }
 
-    const $error = $(`
-      <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">×</span>
-          ${error}
-        </button>
-      </div>
-    `);
+    var $error = $(
+      '<div class="alert alert-danger">' +
+      '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+      '<span aria-hidden="true">×</span>' +
+      error +
+      '</button>' +
+      '</div>'
+    );
 
     $flash.append($error);
     $error.delay(3000).fadeOut(3000);
   }
 
-  $(() => initSignUp());
+  $(document).on('ready turbolinks:load', function () {
+    initSignUp();
+  });
 
-})(window, jQuery)
+})(window, jQuery);
