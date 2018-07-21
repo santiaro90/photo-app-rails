@@ -1,0 +1,60 @@
+((window, $) => {
+  let $form, $submit;
+
+  function initSignUp() {
+    $form = $('form#sign-up');
+    $submit = $form.find('input[type=submit]');
+
+    if (!$form.length || !window.Stripe) {
+      return;
+    }
+
+    window.Stripe.setPublishableKey('<%= Rails.configuration.stripe[:publishable_key] %>');
+
+    $form.on('submit', onSubmit);
+  }
+
+  function onSubmit(event) {
+    Stripe.card.createToken($form, onTokenRequested);
+    $submit.prop('disabled', true);
+
+    return false;
+  }
+
+  function onTokenRequested(status, response) {
+    if (response.error) {
+      onTokenError(response.error);
+    } else {
+      const $token = $('<input type="hidden" name="payment[token]">').val(response.id);
+
+      $form.off('submit');
+      $form.append($token);
+      $form.find('[data-stripe]').remove();
+      $form.submit();
+    }
+  }
+
+  function onTokenError(error) {
+    const $flash = $('#credit-card-error');
+
+    if (!$flash.length) {
+      const $container = $('main.container').first();
+      $container.prepend($flash);
+    }
+
+    const $error = $(`
+      <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+          ${error}
+        </button>
+      </div>
+    `);
+
+    $flash.append($error);
+    $error.delay(3000).fadeOut(3000);
+  }
+
+  $(() => initSignUp());
+
+})(window, jQuery)
